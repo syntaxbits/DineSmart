@@ -9,51 +9,45 @@ Project Setup and Directory Structure
 
 ```
 DineSmart/
-├── src/
-│   ├── core/                     # Contains core business logic and shared models
-│   │   ├── main/java/com/dinesmart/core/
-│   │   └── module-info.java
-│   ├── data/                     # Handles data persistence and retrieval (e.g., JDBC, file I/O)
-│   │   ├── main/java/com/dinesmart/data/
-│   │   └── module-info.java
-│   ├── gui/                      # Contains all Swing UI components and controllers (the View and Controller in MVC)
-│   │   ├── main/java/com/dinesmart/gui/
-│   │   └── module-info.java
-│   └── util/                     # Provides utility classes (e.g., date formatting, logging, common helpers)
-│       ├── main/java/com/dinesmart/util/
-│       └── module-info.java
-└── resources/
-    ├── i18n/                     # Internationalization files
-    │   ├── Messages_en_CA.properties
-    │   └── Messages_fr_CA.properties
-    └── images/                   # Placeholder for any images (e.g., icons, logos)
+├── core/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   └── resources/
+│   └── (module-info.java will go here)
+├── data/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   └── resources/
+│   └── (module-info.java will go here)
+├── gui/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   └── resources/
+│   └── (module-info.java will go here)
+├── util/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   └── resources/
+│   └── (module-info.java will go here)
+└── (Optional: build.sh, run.sh, etc. for compilation/execution scripts)
 ```
 
-Explanation of the Structure:
-
-DineSmart/: 
-The root directory of our project.
-
-src/: 
-Contains all the source code for our Java modules.
+We will organize the project into four distinct modules, each with a specific responsibility, following the MVC principles:
 
 core/: 
-This module will encapsulate the core business logic of the restaurant management system. It will contain models like MenuItem, Table, Order, and their associated business rules. It represents the "Model" part of our MVC.
+This module will contain the core business logic, models (M in MVC), and fundamental application components that don't directly interact with the GUI or data persistence. This includes entities like MenuItem, Order, Table, Employee, etc.
 
 data/: 
-This module will be responsible for all data access operations. This is where we'll handle saving and loading data, potentially using JDBC for database connectivity or file I/O for simpler persistence.
+This module will handle all data access operations (DAO layer), including persistence to a database (JDBC, covering "Database Connectivity" and "I/O Operations") or file-based storage. It will interact with the core module's model objects.
 
 gui/: 
-This module will contain all the Swing-related code, including frames, panels, and custom components (JTable, JList, JRadioButton, etc.). It will also house the controllers that mediate between the view and the model, effectively being the "View" and "Controller" parts of MVC.
+This module will contain the user interface components (V in MVC) and controllers (C in MVC). It will depend on the core module for business logic and data models, and potentially on the data module for direct data retrieval or updates if the controller logic dictates. This is where all our Swing components (JTable, JList, etc.) will reside.
 
 util/: 
-This module will contain general utility classes that can be used across different modules, such as date/time formatters, custom exception classes, and other helper functions.
+This module will house common utility classes that can be reused across other modules. This includes things like logging utilities, date/time formatters, localization helpers, and potentially custom exception types, covering "Localization" and "Exception Handling".
 
-resources/: 
-This directory will store non-Java source files.
-
-i18n/: 
-This sub-directory is specifically for our localization property files (Messages_en_CA.properties for English and Messages_fr_CA.properties for French), crucial for demonstrating localization.
-
-images/: 
-A placeholder for any images like icons or logos that our GUI might use.
+For each module, we'll follow a standard Maven/Gradle-like directory structure: src/main/java for source code and src/main/resources for non-code assets (like localization property files).
